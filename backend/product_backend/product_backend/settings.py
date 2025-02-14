@@ -25,8 +25,32 @@ SECRET_KEY = "django-insecure-%481jyg9k=b43(7)az_dpu6c*mo1uncns98dw$hs51!4r*rsz3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = ["127.0.0.1",
+                 "localhost",]
+
+#  Allow your frontend origin
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:3000",  # Add your frontend origin
+    "http://localhost:3000",
+]
+
+#  If you want to allow all origins (not recommended for production)
+CORS_ALLOW_ALL_ORIGINS = False  # Set to True only for testing
+
+#  Allow credentials (JWT tokens, cookies)
+#CORS_ALLOW_CREDENTIALS = True
+
+""" 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+"""
 
 # Application definition
 
@@ -39,9 +63,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "products",
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
